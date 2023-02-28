@@ -18,13 +18,13 @@ module Sidekiq
     property port : Int32
     property db : Int32
     property pool_size : Int32
-    property pool_timeout : Float64
+    property pool_timeout : Time::Span
     property password : String?
 
     DEFAULT_HOST = "localhost"
     DEFAULT_PORT = 6379
 
-    def initialize(@hostname = DEFAULT_HOST, @port = DEFAULT_PORT, @db = 0, @pool_size = 26, @pool_timeout = 5.0, @password = nil)
+    def initialize(@hostname = DEFAULT_HOST, @port = DEFAULT_PORT, @db = 0, @pool_size = 26, @pool_timeout = Time::Span.new(seconds: 5), @password = nil)
       env_var = ENV["REDIS_PROVIDER"]?
       initialize_from_env_var(env_var) if env_var
     end
